@@ -59,19 +59,19 @@ Not a binary file, but part of the boot chain:
 
 ## OS notes
 
-- [os/events.md] — the 12 `PDSystemEvent` codes, dispatch, and locked-state semantics.
-- [os/framebuffer.md] — the 240×52-byte framebuffer, dirty rows, VBL.
-- [os/memory.md] — heap, stack, Lua VM alloc, malloc wrapper.
-- [os/boot.md] — power-on → Setup.pdx → Launcher.pdx → game.
-- [os/device_disk.md] — data partition layout: `Games/`, `Data/`, `Shared/`, `tmp/`, logs.
-- [os/drm.md] — Catalog protection: bit-30 encryption, `Playdate PDX` wrapper, `hash=` metadata.
-- [os/catalog_api.md] — Catalog HTTPS API on `play.date/api/v2/`: endpoints, JSON shapes, purchase flow.
+- [os/events.md](os/events.md) — the 12 `PDSystemEvent` codes, dispatch, and locked-state semantics.
+- [os/framebuffer.md](os/framebuffer.md) — the 240×52-byte framebuffer, dirty rows, VBL.
+- [os/memory.md](os/memory.md) — heap, stack, Lua VM alloc, malloc wrapper.
+- [os/boot.md](os/boot.md) — power-on → Setup.pdx → Launcher.pdx → game.
+- [os/device_disk.md](os/device_disk.md) — data partition layout: `Games/`, `Data/`, `Shared/`, `tmp/`, logs.
+- [os/drm.md](os/drm.md) — Catalog protection: bit-30 encryption, `Playdate PDX` wrapper, `hash=` metadata.
+- [os/catalog_api.md](os/catalog_api.md) — Catalog HTTPS API on `play.date/api/v2/`: endpoints, JSON shapes, purchase flow.
 
 ## Firmware
 
-- [firmware/hardware.md] — SoC, peripherals, pin map, LCD driver.
-- [firmware/symbolizer.md] — how `firmware_symbolizer.py` translates crash logs.
-- [firmware/simulator.md] — how the desktop Simulator emulates the runtime.
+- [firmware/hardware.md](firmware/hardware.md) — SoC, peripherals, pin map, LCD driver.
+- [firmware/symbolizer.md](firmware/symbolizer.md) — how `firmware_symbolizer.py` translates crash logs.
+- [firmware/simulator.md](firmware/simulator.md) — how the desktop Simulator emulates the runtime.
 
 ## Legal
 
