@@ -1,8 +1,11 @@
 # playdate_network — Wi-Fi, HTTP, TCP
 
 Source: `C_API/pd_api/pd_api_network.h` (header title `pd_api_http.h`).
-Added in **firmware 3.0** with the Rev D Wi-Fi module. Requires the
-ESP32-based add-on radio; older units (Rev A) return `NET_NO_DEVICE`.
+Added in **firmware 3.0**. Wi-Fi hardware (ESP32-family radio) is
+present on both Rev A and Rev B boards but was disabled in launch
+firmware; it activates once the device is updated to FW ≥ 2.x, and the
+C `playdate_network` API arrives in FW 3.0. Units on stale firmware
+return `NET_NO_DEVICE`.
 
 ## Error codes
 

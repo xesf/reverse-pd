@@ -7,7 +7,7 @@
 2. STM32 ROM bootloader runs (fixed at 0x1FF00000, from mask ROM).
 3. BOOT0=0 → jumps to 0x08000000: primary firmware image.
 4. Firmware brings up SDRAM (FMC), QSPI flash, LCD, audio codec,
-   crank encoder, USB, ESP32 co-processor (Rev D+).
+   crank encoder, USB, onboard ESP32-family Wi-Fi radio (activated in FW ≥ 2.x).
 5. Firmware mounts internal flash filesystem (proprietary),
    verifies /System/* signature block.
 6. If a firmware update image is staged, boots into updater.pdx.

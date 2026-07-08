@@ -3,36 +3,51 @@
 The Playdate console has gone through three hardware revisions since
 launch. All expose the same firmware API to games.
 
-## Rev A / B / C — original series
+## Board revisions
 
-- **SoC**: STMicroelectronics STM32-family Cortex-M7. Original launch
-  units documented as **STM32F746IGH6** (216 MHz + OC to 240 MHz,
-  1 MB flash, 320 KB SRAM). Later revs likely moved to a larger
-  **STM32H7** part — crashlogs on 3.0.3+ firmware show `pc:24000000+`
-  (STM32H7 AXI flash region) and heap of 5 MB, incompatible with
-  F746's 320 KB SRAM. See "Memory map from crashlog" below.
-- **External RAM**: 8 MB SDRAM (typically ISSI IS42S16400J).
+Two hardware revisions ship publicly. Both use the same SoC family and
+same peripheral set — the only difference is **memory capacity**.
+
+### Rev A — launch units (2022)
+
+- **SoC**: STMicroelectronics **STM32F746IGH6** (Cortex-M7 @ 180 MHz
+  nominal, OC'd to ~180–216 MHz in firmware).
+- **Internal**: 1 MB flash + 320 KB SRAM.
+- **External SDRAM**: 8 MB (ISSI IS42S16400J family).
 - **External flash**: 16 MB QSPI NOR (Winbond W25Q128).
+
+### Rev B — later production
+
+- Same SoC family, same firmware image.
+- **Larger memory**: bumped external RAM/flash. Crashlogs from Rev B
+  units on FW 3.0.x show `pc:0x24000000+` (AXI-mapped code region) and
+  heaps up to 5.5 MB — a memory map larger than Rev A can address.
+- All other peripherals and PCB IO identical.
+
+Firmware detects the revision at boot and adjusts allocator limits;
+games do not see any API-visible difference.
+
+### Wi-Fi
+
+Wi-Fi hardware is on both Rev A and Rev B boards. It was **disabled
+in firmware** at launch and enabled by firmware ≥ 2.x update. The
+`playdate_network` C API arrived with firmware 3.0.
+
+- Radio: onboard ESP32-family Wi-Fi/BT chip, on internal UART bridge.
+- 2.4 GHz 802.11 b/g/n, BLE 5.0 (BLE unused publicly).
+- No separate SKU — every retail Playdate can connect once updated.
+
+## Common peripherals (all revs)
+
 - **LCD**: Sharp Memory-in-Pixel LS027B7DH01A, 400×240, 1-bit reflective.
-- **Audio**: TI TLV320DAC3100 codec + Class-D speaker.
+- **Audio**: TI TLV320-family codec + Class-D speaker.
 - **IMU**: STMicro LIS3DH accelerometer (±2 g, I²C).
 - **Crank**: AMS AS5600 magnetic rotary encoder, I²C, 12-bit angle.
 - **Buttons**: 6 (D-pad + A + B + Menu + Lock).
 - **USB**: USB 2.0 full-speed, CDC ACM (serial console) + mass storage
-  in recovery mode.
+  in recovery/datadisk mode.
 - **Battery**: LiPo 740 mAh, 3.7 V nominal.
 - **Headset**: 3.5 mm TRRS, CTIA pinout.
-
-## Rev D — 2024+ (Wi-Fi capable)
-
-Adds:
-
-- **Wi-Fi/BT**: ESP32-C3 co-processor on internal UART, exposed via
-  `playdate_network`. 2.4 GHz 802.11 b/g/n, BLE 5.0 (BLE unused
-  publicly).
-- **Firmware ≥ 3.0** required for the network APIs.
-- Older units (Rev A/B/C) get an "N/A" from `network->getStatus()`
-  returning `kWifiNotAvailable`; all HTTP calls fail with `NET_NO_DEVICE`.
 
 ## Memory map (from crashlog)
 
@@ -53,10 +68,12 @@ running firmware 3.0.3 / 3.0.4:
 0xE0000000  Cortex-M private peripheral bus
 ```
 
-The `pc:24061bb2` values consistently seen in fault frames confirm
-firmware runs from AXI-mapped flash at `0x24000000` — a **STM32H7-only
-memory mapping**. Rev D units (Wi-Fi capable) probably ship an H7A3
-or H750 variant. Earlier F7 units would show `pc:08xxxxxx`.
+The `pc:24061bb2` values seen in fault frames are from a **Rev B**
+unit on FW 3.0.3+. Rev B's memory map exposes an AXI-mapped code
+region at `0x24000000` that Rev A does not. Rev A fault PCs would
+appear at `0x08xxxxxx` (the F746 flash bank). Same firmware image
+runs on both; linker script places code at the region available on
+each rev.
 
 ## Memory layout (device)
 

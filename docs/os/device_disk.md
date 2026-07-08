@@ -17,7 +17,7 @@ here.
 ├── Screenshots/          # user-triggered screenshots (Menu + Lock combo)
 ├── Shared/               # cross-game shared state (see below)
 ├── Staging/              # firmware upload staging (usually empty)
-├── System/               # empty on Rev D unit; likely populated on recovery
+├── System/               # empty on Rev B unit; likely populated on recovery
 └── tmp/                  # in-progress Catalog downloads
 ```
 
