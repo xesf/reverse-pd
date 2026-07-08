@@ -49,13 +49,26 @@ offset  size  field
 | `Playdate AUD` | `.pda`    | [formats/pda.md] | 4-bit ADPCM audio (mono/stereo) |
 | `Playdate VID` | `.pdv`    | [formats/pdv.md] | 1-bit indexed video, delta frames |
 | `Playdate STR` | `.pds`    | [formats/pds.md] | localized string table |
-| —              | `pdxinfo` | [formats/pdxinfo.md] | plain-text KV metadata |
+| —              | `pdxinfo` | [formats/pdxinfo.md](formats/pdxinfo.md), [formats/pdxinfo_full.md](formats/pdxinfo_full.md) | plain-text KV metadata (full field catalog) |
 | —              | `.pdx`    | [formats/pdx.md] | directory bundle (not a file) |
+| —              | `.mid`    | [formats/midi.md](formats/midi.md) | Standard MIDI File; loaded by `sound.sequence` |
+| —              | `.pda` encode | [formats/video_encode.md](formats/video_encode.md) | `pdc` GIF→PDV pipeline |
+| —              | `.fnt` + `.png` | [formats/font_src.md](formats/font_src.md) | author-side font source |
+| —              | Pulp | [formats/pulp.md](formats/pulp.md) | Pulp visual game maker runtime |
+| —              | Achievements | [formats/achievements.md](formats/achievements.md) | `Shared/Achievements/<bundleID>/` |
+| —              | Save files | [formats/savefile.md](formats/savefile.md) | `Data/<bundleID>/*.json` conventions |
 
 Not a binary file, but part of the boot chain:
 
 - `pdxinfo` (plain text) — bundle manifest, see [formats/pdxinfo.md]
 - `main.pdz` — mandatory entry archive at root of every `.pdx`
+
+## Lua runtime
+
+- [lua/README.md](lua/README.md) — Lua 5.4 embed, event handlers, CoreLibs.
+- [lua/corelibs_reference.md](lua/corelibs_reference.md) — every `CoreLibs/*.lua` module.
+- [lua/idioms.md](lua/idioms.md) — `class()`, `import`, metatables, compound ops.
+- [lua/playdate_globals.md](lua/playdate_globals.md) — the `playdate.*` namespace tree.
 
 ## OS notes
 
@@ -66,12 +79,23 @@ Not a binary file, but part of the boot chain:
 - [os/device_disk.md](os/device_disk.md) — data partition layout: `Games/`, `Data/`, `Shared/`, `tmp/`, logs.
 - [os/drm.md](os/drm.md) — Catalog protection: bit-30 encryption, `Playdate PDX` wrapper, `hash=` metadata.
 - [os/catalog_api.md](os/catalog_api.md) — Catalog HTTPS API on `play.date/api/v2/`: endpoints, JSON shapes, purchase flow.
+- [os/catalog_auth.md](os/catalog_auth.md) — device pairing, session tokens, purchase flow (inferred).
+- [os/drm_confirmation.md](os/drm_confirmation.md) — approach for cipher identification (attack notes).
+- [os/serial_protocol.md](os/serial_protocol.md) — USB CDC shell verbs, install/datadisk/bootdisk semantics.
+- [os/recovery.md](os/recovery.md) — Boot + Recovery partitions, factory reset, signed firmware.
+- [os/launcher_cards.md](os/launcher_cards.md) — card/icon assets, animation, launch image sequence.
 
 ## Firmware
 
 - [firmware/hardware.md](firmware/hardware.md) — SoC, peripherals, pin map, LCD driver.
 - [firmware/symbolizer.md](firmware/symbolizer.md) — how `firmware_symbolizer.py` translates crash logs.
 - [firmware/simulator.md](firmware/simulator.md) — how the desktop Simulator emulates the runtime.
+- [firmware/sim_config.md](firmware/sim_config.md) — `~/.Playdate/config` toolchain settings.
+- [firmware/sim_plugin_abi.md](firmware/sim_plugin_abi.md) — `pdex.dylib`/`.dll`/`.so` loading contract.
+- [firmware/pdex_loader.md](firmware/pdex_loader.md) — on-device `pdex.bin` loader; `Playdate PDX` wrapper.
+- [firmware/pdc.md](firmware/pdc.md) — pdc compiler pipeline.
+- [firmware/pdutil.md](firmware/pdutil.md) — USB serial CLI.
+- [firmware/keys.md](firmware/keys.md) — hypothesized on-device key material.
 
 ## Legal
 
